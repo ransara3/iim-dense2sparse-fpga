@@ -30,7 +30,7 @@ and evaluates that idea end to end, working toward an FPGA datapath.
       [taohan10200/IIM#41](https://github.com/taohan10200/IIM/issues/41)), from a
       statistically realistic synthetic generator driven by real JHU-CROWD++ ground
       truth (`scripts/synth_maps_from_gt.py`).
-- [ ] Step 2: Pure-Python/NumPy reference implementation of Algorithm 1
+- [x] Step 2: Pure-Python/NumPy reference implementation of Algorithm 1
       (margin-gated binarization + single-pass streaming connected-component
       labeling) validated against OpenCV's result.
 - [ ] Step 3: Quantization sweep of `P`/`T` (topology-aware precision analysis):
@@ -111,6 +111,27 @@ so Step 2/3 work isn't blocked on a working checkpoint:
 ```bash
 # data/samples/<name>.jpg + data/samples/<name>.txt (JHU-CROWD++ GT: "x y w h occ blur" per line)
 python scripts/synth_maps_from_gt.py --images data/samples --out-dir data/maps
+```
+
+## Reference algorithm (Step 2)
+
+`reference_algorithm/` is a pure-Python/NumPy implementation of Algorithm 1
+("Margin-Gated Dense-to-Sparse Localization") from the FPGA paper:
+
+- `margin_gated_binarize(P, T)`: vectorized margin-gated binarization. Provably
+  identical to naive `B = 1[P >= T]` for any `T` bounded in `(0.2, 0.7)`.
+- `streaming_ccl(B, min_area=1)`: single-pass, row-buffer 4-connected labeling
+  with union-find label equivalence (`union_find.py`) and early component
+  closing — a label's centroid is emitted and its accumulator memory released
+  as soon as it provably cannot be extended by any future row, matching the
+  paper's bounded-memory streaming datapath rather than just a generic
+  two-pass CCL.
+
+Validate both properties (math equivalence + exact agreement with OpenCV's
+`connectedComponentsWithStats`) on the dumped/synthesized maps:
+
+```bash
+python reference_algorithm/validate.py --maps-dir data/maps
 ```
 
 ## License / attribution
