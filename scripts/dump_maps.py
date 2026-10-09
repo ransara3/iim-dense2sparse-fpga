@@ -23,6 +23,7 @@ import json
 import os
 import sys
 from collections import OrderedDict
+from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
@@ -30,6 +31,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from PIL import Image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from reference_algorithm.margin_gated_ccl import margin_gated_binarize, streaming_ccl
 
 # Per-dataset normalization stats, copied from IIM/test.py so preprocessing
 # matches what each checkpoint was trained with.
@@ -114,6 +118,14 @@ def get_boxInfo_from_Binar_map(binar_numpy: np.ndarray, min_area: int = 3):
     return {"num": int(len(points)), "points": points.tolist()}
 
 
+def localize_margin_gated(p_np: np.ndarray, t_np: np.ndarray, min_area: int = 3):
+    """Our margin-gated binarization + streaming CCL (reference_algorithm/),
+    in place of the original plain-threshold + cv2 pipeline above."""
+    b_np = margin_gated_binarize(p_np, t_np)
+    components = streaming_ccl(b_np, min_area=min_area)
+    return {"num": len(components), "points": [asdict(c) for c in components]}
+
+
 def find_images(images_arg: Path):
     if images_arg.is_file():
         return [images_arg]
@@ -129,6 +141,9 @@ def main():
     parser.add_argument("--images", type=Path, required=True, help="Image file or directory of images")
     parser.add_argument("--out-dir", type=Path, default=Path("data/maps"))
     parser.add_argument("--min-area", type=int, default=3, help="Min blob area (px) kept as a detected point")
+    parser.add_argument("--localizer", choices=["margin_gated", "opencv"], default="margin_gated",
+                        help="Dense-to-sparse post-processing: our margin-gated streaming CCL "
+                             "(reference_algorithm/) or the original IIM/test.py cv2-based baseline")
     args = parser.parse_args()
 
     # Resolve all user-provided paths to absolute *before* changing directory,
@@ -186,12 +201,16 @@ def main():
         np.save(args.out_dir / f"{stem}_T.npy", t_np.astype(np.float32))
         np.save(args.out_dir / f"{stem}_B.npy", b_np.astype(np.uint8))
 
-        pre_data = get_boxInfo_from_Binar_map(b_np, min_area=args.min_area)
+        if args.localizer == "margin_gated":
+            pre_data = localize_margin_gated(p_np, t_np, min_area=args.min_area)
+        else:
+            pre_data = get_boxInfo_from_Binar_map(b_np, min_area=args.min_area)
         with open(args.out_dir / f"{stem}_points.json", "w") as f:
             json.dump(pre_data, f)
 
         print(f"[ok] {img_path.name}: P/T range=({p_np.min():.3f},{p_np.max():.3f})/"
-              f"({t_np.min():.3f},{t_np.max():.3f}), detected points={pre_data['num']}")
+              f"({t_np.min():.3f},{t_np.max():.3f}), localizer={args.localizer}, "
+              f"detected points={pre_data['num']}")
 
 
 if __name__ == "__main__":

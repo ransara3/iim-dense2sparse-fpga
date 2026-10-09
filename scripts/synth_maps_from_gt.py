@@ -29,10 +29,15 @@ Usage:
 """
 import argparse
 import json
+import sys
+from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from reference_algorithm.margin_gated_ccl import margin_gated_binarize, streaming_ccl
 
 PARA = 2.0
 BIAS = 0.2
@@ -103,12 +108,21 @@ def get_boxInfo_from_Binar_map(binar_numpy: np.ndarray, min_area: int = 3):
     return {"num": int(len(points)), "points": points.tolist()}
 
 
+def localize_margin_gated(p_np: np.ndarray, t_np: np.ndarray, min_area: int = 3):
+    b_np = margin_gated_binarize(p_np, t_np)
+    components = streaming_ccl(b_np, min_area=min_area)
+    return {"num": len(components), "points": [asdict(c) for c in components]}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--images", type=Path, required=True, help="Directory with <name>.jpg + <name>.txt GT pairs")
     parser.add_argument("--out-dir", type=Path, default=Path("data/maps"))
     parser.add_argument("--sigma", type=float, default=4.0, help="Gaussian blur sigma (px) for the density proxy")
     parser.add_argument("--min-area", type=int, default=3)
+    parser.add_argument("--localizer", choices=["margin_gated", "opencv"], default="margin_gated",
+                        help="Dense-to-sparse post-processing: our margin-gated streaming CCL "
+                             "(reference_algorithm/) or the original IIM/test.py cv2-based baseline")
     args = parser.parse_args()
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
@@ -135,14 +149,15 @@ def main():
         np.save(args.out_dir / f"{stem}_T.npy", t_np)
         np.save(args.out_dir / f"{stem}_B.npy", b_np)
 
-        pred = get_boxInfo_from_Binar_map(b_np, min_area=args.min_area)
+        pred = localize_margin_gated(p_np, t_np, min_area=args.min_area) if args.localizer == "margin_gated" \
+            else get_boxInfo_from_Binar_map(b_np, min_area=args.min_area)
         with open(args.out_dir / f"{stem}_points.json", "w") as f:
             json.dump(pred, f)
 
         print(f"[ok] {img_path.name}: gt_points={len(points)}, "
               f"P range=({p_np.min():.3f},{p_np.max():.3f}), "
               f"T range=({t_np.min():.3f},{t_np.max():.3f}), "
-              f"detected_points={pred['num']}")
+              f"localizer={args.localizer}, detected_points={pred['num']}")
 
 
 if __name__ == "__main__":
