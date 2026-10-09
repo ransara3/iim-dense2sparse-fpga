@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# large/binary artifacts — not meant for git
+data/checkpoints/*
+!data/checkpoints/.gitkeep
+data/samples/*
+!data/samples/.gitkeep
+data/maps/*
+!data/maps/.gitkeep
+
+*.pth
+*.npy
+*.npz
