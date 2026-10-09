@@ -24,8 +24,12 @@ and evaluates that idea end to end, working toward an FPGA datapath.
 
 ## Project status / roadmap
 
-- [x] Step 1: Generate real `P(x,y)` / `T(x,y)` / `B(x,y)` dense maps from a working
-      IIM model (`scripts/dump_maps.py`).
+- [x] Step 1: Generate `P(x,y)` / `T(x,y)` / `B(x,y)` dense maps, either from a working
+      IIM model (`scripts/dump_maps.py`) or, since upstream's pretrained checkpoints are
+      currently undownloadable (dead OneDrive/SharePoint links, see
+      [taohan10200/IIM#41](https://github.com/taohan10200/IIM/issues/41)), from a
+      statistically realistic synthetic generator driven by real JHU-CROWD++ ground
+      truth (`scripts/synth_maps_from_gt.py`).
 - [ ] Step 2: Pure-Python/NumPy reference implementation of Algorithm 1
       (margin-gated binarization + single-pass streaming connected-component
       labeling) validated against OpenCV's result.
@@ -94,6 +98,20 @@ python scripts/dump_maps.py \
 Without `--checkpoint`, the script runs in **smoke-test mode** with randomly
 initialized weights — useful to validate the pipeline's shapes/dataflow, but the
 resulting maps/points are not meaningful for localization accuracy.
+
+### Alternative: synthetic maps from ground truth (no checkpoint needed)
+
+Upstream IIM's pretrained-weight links (OneDrive/SharePoint) are currently dead for
+everyone (see [taohan10200/IIM#41](https://github.com/taohan10200/IIM/issues/41)), so
+as a stand-in, `scripts/synth_maps_from_gt.py` builds realistic `P`/`T`/`B` maps
+directly from a crowd-counting dataset's point annotations (e.g. JHU-CROWD++),
+using the exact same `compressedSigmoid` and `B = 1[P>=T]` math as IIM's `PBM.py`,
+so Step 2/3 work isn't blocked on a working checkpoint:
+
+```bash
+# data/samples/<name>.jpg + data/samples/<name>.txt (JHU-CROWD++ GT: "x y w h occ blur" per line)
+python scripts/synth_maps_from_gt.py --images data/samples --out-dir data/maps
+```
 
 ## License / attribution
 
