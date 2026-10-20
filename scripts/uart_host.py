@@ -145,7 +145,12 @@ def cpu_reference_records(P: np.ndarray, T: np.ndarray) -> list[tuple[int, int, 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--port", required=True, help="serial device (e.g. /dev/ttyUSB0)")
+    parser.add_argument("--transport", choices=["uart", "jtag"], default="uart")
+    parser.add_argument("--jtag-library", type=Path, help="Path to libjtag_atlantic.so or jtag_atlantic.dll")
+    parser.add_argument("--cable", help="USB-Blaster cable name; omit to auto-select")
+    parser.add_argument("--device", type=int, default=1, help="JTAG chain device index (1-based)")
+    parser.add_argument("--instance", type=int, default=0, help="JTAG UART instance index (0-based)")
+    parser.add_argument("--port", help="serial device (e.g. /dev/ttyUSB0)")
     parser.add_argument("--p-map", type=Path, required=True)
     parser.add_argument("--t-map", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True, help="destination JSON file")
@@ -153,17 +158,28 @@ def main() -> None:
     parser.add_argument("--timeout", type=float, default=30.0)
     args = parser.parse_args()
 
-    try:
-        import serial
-    except ImportError as exc:
-        raise SystemExit("Install the optional UART dependency: pip install -r requirements-hardware.txt") from exc
+    if args.transport == "jtag":
+        if args.jtag_library is None:
+            parser.error("--jtag-library is required for JTAG transport")
+        from scripts.jtag_atlantic import JtagAtlantic
+        connection = lambda: JtagAtlantic(args.jtag_library, args.cable, args.device,
+                                          args.instance, args.timeout)
+    else:
+        if not args.port:
+            parser.error("--port is required for UART transport")
+        try:
+            import serial
+        except ImportError as exc:
+            raise SystemExit("Install requirements-hardware.txt for UART transport") from exc
+        connection = lambda: serial.Serial(args.port, args.baud, timeout=args.timeout,
+                                           write_timeout=args.timeout)
 
     P = np.load(args.p_map)
     T = np.load(args.t_map)
     start = time.perf_counter()
     expected = cpu_reference_records(P, T)
     cpu_seconds = time.perf_counter() - start
-    with serial.Serial(args.port, args.baud, timeout=args.timeout, write_timeout=args.timeout) as port:
+    with connection() as port:
         result = stream_maps(port, P, T)
     actual = sorted(
         (

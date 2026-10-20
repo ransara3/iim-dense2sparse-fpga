@@ -223,6 +223,6 @@ module tb_de2_115_uart_top;
     initial begin
         #100000000;
         $fatal(1, "UART test timed out: rx_state=%0d tx_state=%0d error_req=%0d",
-               dut.rx_state, dut.tx_state, dut.request_error);
+               dut.protocol.rx_state, dut.protocol.tx_state, dut.protocol.request_error);
     end
 endmodule

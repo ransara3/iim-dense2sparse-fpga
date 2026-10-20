@@ -70,19 +70,31 @@ module margin_gated_ccl #(
     wire pixel_foreground =
         (p_value >= 8'd51) && ((p_value >= 8'd179) || (p_value >= t_value));
 
-    function [LABEL_WIDTH-1:0] find_root;
-        input [LABEL_WIDTH-1:0] label;
-        integer depth;
-        reg [LABEL_WIDTH-1:0] root;
-        begin
-            root = label;
-            for (depth = 0; depth < LABEL_WIDTH; depth = depth + 1) begin
-                if (parent[root] != root)
-                    root = parent[root];
-            end
-            find_root = root;
+    // Expose dependent parent reads to Quartus rather than reading RAM
+    // from a function (which can trigger a Quartus 25.1 elaborator crash).
+    // Union by rank bounds the parent depth by LABEL_WIDTH.
+    wire [LABEL_WIDTH-1:0] canon_label;
+    wire [LABEL_WIDTH-1:0] left_path [0:LABEL_WIDTH];
+    wire [LABEL_WIDTH-1:0] up_path [0:LABEL_WIDTH];
+    wire [LABEL_WIDTH-1:0] canon_path [0:LABEL_WIDTH];
+    assign canon_label = prev_bank ? row0[canon_pos] : row1[canon_pos];
+    assign left_path[0] = left_label;
+    assign up_path[0] = up_label;
+    assign canon_path[0] = canon_label;
+
+    genvar root_depth;
+    generate
+        for (root_depth = 0; root_depth < LABEL_WIDTH;
+             root_depth = root_depth + 1) begin : gen_root_lookup
+            // Zero is background; parent[0] is never initialized.
+            assign left_path[root_depth+1] = (left_path[root_depth] == 0)
+                ? {LABEL_WIDTH{1'b0}} : parent[left_path[root_depth]];
+            assign up_path[root_depth+1] = (up_path[root_depth] == 0)
+                ? {LABEL_WIDTH{1'b0}} : parent[up_path[root_depth]];
+            assign canon_path[root_depth+1] = (canon_path[root_depth] == 0)
+                ? {LABEL_WIDTH{1'b0}} : parent[canon_path[root_depth]];
         end
-    endfunction
+    endgenerate
 
     always @* begin
         left_label = {LABEL_WIDTH{1'b0}};
@@ -101,9 +113,9 @@ module margin_gated_ccl #(
         left_root = {LABEL_WIDTH{1'b0}};
         up_root = {LABEL_WIDTH{1'b0}};
         if (left_label != 0)
-            left_root = find_root(left_label);
+            left_root = left_path[LABEL_WIDTH];
         if (up_label != 0)
-            up_root = find_root(up_label);
+            up_root = up_path[LABEL_WIDTH];
 
         alloc_found = 1'b0;
         alloc_label = {LABEL_WIDTH{1'b0}};
@@ -279,10 +291,10 @@ module margin_gated_ccl #(
                     if (canon_pos < width_reg) begin
                         if (prev_bank) begin
                             if (row0[canon_pos] != 0)
-                                row0[canon_pos] <= find_root(row0[canon_pos]);
+                                row0[canon_pos] <= canon_path[LABEL_WIDTH];
                         end else begin
                             if (row1[canon_pos] != 0)
-                                row1[canon_pos] <= find_root(row1[canon_pos]);
+                                row1[canon_pos] <= canon_path[LABEL_WIDTH];
                         end
                         canon_pos <= canon_pos + 1'b1;
                     end else begin

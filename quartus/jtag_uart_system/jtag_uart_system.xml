@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2026.10.20.14:13:33"
+ outputDirectory="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Cyclone IV E"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="EP4CE115F29C7"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="7"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="clk" kind="clock" start="0">
+   <property name="clockRate" value="0" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="clk_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="irq" kind="interrupt" start="0">
+   <property name="associatedAddressablePoint" value="jtag_uart_system.uart" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="bridgedReceiverOffset" value="0" />
+   <property name="bridgesToReceiver" value="" />
+   <property name="irqScheme" value="NONE" />
+   <port name="irq_irq" direction="output" role="irq" width="1" />
+  </interface>
+  <interface name="reset" kind="reset" start="0">
+   <property name="associatedClock" value="clk" />
+   <property name="synchronousEdges" value="DEASSERT" />
+   <port name="reset_reset_n" direction="input" role="reset_n" width="1" />
+  </interface>
+  <interface name="uart" kind="avalon" start="0">
+   <property name="addressAlignment" value="NATIVE" />
+   <property name="addressGroup" value="0" />
+   <property name="addressSpan" value="2" />
+   <property name="addressUnits" value="WORDS" />
+   <property name="alwaysBurstMaxBurst" value="false" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="bitsPerSymbol" value="8" />
+   <property name="bridgedAddressOffset" value="0" />
+   <property name="bridgesToMaster" value="" />
+   <property name="burstOnBurstBoundariesOnly" value="false" />
+   <property name="burstcountUnits" value="WORDS" />
+   <property name="constantBurstBehavior" value="false" />
+   <property name="explicitAddressSpan" value="0" />
+   <property name="holdTime" value="0" />
+   <property name="interleaveBursts" value="false" />
+   <property name="isBigEndian" value="false" />
+   <property name="isFlash" value="false" />
+   <property name="isMemoryDevice" value="false" />
+   <property name="isNonVolatileStorage" value="false" />
+   <property name="linewrapBursts" value="false" />
+   <property name="maximumPendingReadTransactions" value="0" />
+   <property name="maximumPendingWriteTransactions" value="0" />
+   <property name="minimumUninterruptedRunLength" value="1" />
+   <property name="printableDevice" value="true" />
+   <property name="readLatency" value="0" />
+   <property name="readWaitStates" value="1" />
+   <property name="readWaitTime" value="1" />
+   <property name="registerIncomingSignals" value="false" />
+   <property name="registerOutgoingSignals" value="false" />
+   <property name="setupTime" value="0" />
+   <property name="timingUnits" value="Cycles" />
+   <property name="transparentBridge" value="false" />
+   <property name="wellBehavedWaitrequest" value="false" />
+   <property name="writeLatency" value="0" />
+   <property name="writeWaitStates" value="0" />
+   <property name="writeWaitTime" value="0" />
+   <port name="uart_chipselect" direction="input" role="chipselect" width="1" />
+   <port name="uart_address" direction="input" role="address" width="1" />
+   <port name="uart_read_n" direction="input" role="read_n" width="1" />
+   <port name="uart_readdata" direction="output" role="readdata" width="32" />
+   <port name="uart_write_n" direction="input" role="write_n" width="1" />
+   <port name="uart_writedata" direction="input" role="writedata" width="32" />
+   <port
+       name="uart_waitrequest"
+       direction="output"
+       role="waitrequest"
+       width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="jtag_uart_system:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=EP4CE115F29C7,AUTO_DEVICE_FAMILY=Cyclone IV E,AUTO_DEVICE_SPEEDGRADE=7,AUTO_GENERATION_ID=1792485812,AUTO_UNIQUE_ID=(altera_avalon_jtag_uart:25.1:FIFO_WIDTH=8,HEX_READ_DEPTH_STR=64,HEX_WRITE_DEPTH_STR=64,RD_WIDTHU=6,WR_WIDTHU=6,allowMultipleConnections=false,avalonSpec=2.0,clkFreq=0,enableInteractiveInput=false,enableInteractiveOutput=false,hubInstanceID=0,legacySignalAllow=false,printingMethod=false,readBufferDepth=64,readIRQThreshold=8,read_le=ON,simInputCharacterStream=,simInteractiveOptions=NO_INTERACTIVE_WINDOWS,useRegistersForReadBuffer=false,useRegistersForWriteBuffer=false,useRelativePathForSimFile=false,writeBufferDepth=64,writeIRQThreshold=8,write_le=ON)"
+   instancePathKey="jtag_uart_system"
+   kind="jtag_uart_system"
+   version="1.0"
+   name="jtag_uart_system">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_GENERATION_ID" value="1792485812" />
+  <parameter name="AUTO_DEVICE" value="EP4CE115F29C7" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="7" />
+  <generatedFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/jtag_uart_system.v"
+       type="VERILOG" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart.sv"
+       type="SYSTEM_VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_log_module.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_scfifo_r.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_scfifo_w.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/altera_lite/25.1std/ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/altera_avalon_jtag_uart_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Debug" culprit="jtag_uart_system">queue size: 0 starting:jtag_uart_system "jtag_uart_system"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>1</b> modules, <b>0</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Debug" culprit="jtag_uart_system"><![CDATA["<b>jtag_uart_system</b>" reuses <b>altera_avalon_jtag_uart</b> "<b>submodules/altera_avalon_jtag_uart</b>"]]></message>
+   <message level="Debug" culprit="jtag_uart_system">queue size: 0 starting:altera_avalon_jtag_uart "submodules/altera_avalon_jtag_uart"</message>
+   <message level="Info" culprit="uart"><![CDATA["<b>jtag_uart_system</b>" instantiated <b>altera_avalon_jtag_uart</b> "<b>uart</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_jtag_uart:25.1:FIFO_WIDTH=8,HEX_READ_DEPTH_STR=64,HEX_WRITE_DEPTH_STR=64,RD_WIDTHU=6,WR_WIDTHU=6,allowMultipleConnections=false,avalonSpec=2.0,clkFreq=0,enableInteractiveInput=false,enableInteractiveOutput=false,hubInstanceID=0,legacySignalAllow=false,printingMethod=false,readBufferDepth=64,readIRQThreshold=8,read_le=ON,simInputCharacterStream=,simInteractiveOptions=NO_INTERACTIVE_WINDOWS,useRegistersForReadBuffer=false,useRegistersForWriteBuffer=false,useRelativePathForSimFile=false,writeBufferDepth=64,writeIRQThreshold=8,write_le=ON"
+   instancePathKey="jtag_uart_system:.:uart"
+   kind="altera_avalon_jtag_uart"
+   version="25.1"
+   name="altera_avalon_jtag_uart">
+  <parameter name="readBufferDepth" value="64" />
+  <parameter name="clkFreq" value="0" />
+  <parameter name="useRelativePathForSimFile" value="false" />
+  <parameter name="read_le" value="ON" />
+  <parameter name="HEX_WRITE_DEPTH_STR" value="64" />
+  <parameter name="hubInstanceID" value="0" />
+  <parameter name="write_le" value="ON" />
+  <parameter name="enableInteractiveInput" value="false" />
+  <parameter name="avalonSpec" value="2.0" />
+  <parameter name="FIFO_WIDTH" value="8" />
+  <parameter name="simInputCharacterStream" value="" />
+  <parameter name="readIRQThreshold" value="8" />
+  <parameter name="useRegistersForWriteBuffer" value="false" />
+  <parameter name="useRegistersForReadBuffer" value="false" />
+  <parameter name="simInteractiveOptions" value="NO_INTERACTIVE_WINDOWS" />
+  <parameter name="HEX_READ_DEPTH_STR" value="64" />
+  <parameter name="enableInteractiveOutput" value="false" />
+  <parameter name="writeIRQThreshold" value="8" />
+  <parameter name="RD_WIDTHU" value="6" />
+  <parameter name="writeBufferDepth" value="64" />
+  <parameter name="allowMultipleConnections" value="false" />
+  <parameter name="printingMethod" value="false" />
+  <parameter name="WR_WIDTHU" value="6" />
+  <parameter name="legacySignalAllow" value="false" />
+  <generatedFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart.sv"
+       type="SYSTEM_VERILOG"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_log_module.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_scfifo_r.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_scfifo_w.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/altera_lite/25.1std/ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/altera_avalon_jtag_uart_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="jtag_uart_system" as="uart" />
+  <messages>
+   <message level="Debug" culprit="jtag_uart_system">queue size: 0 starting:altera_avalon_jtag_uart "submodules/altera_avalon_jtag_uart"</message>
+   <message level="Info" culprit="uart"><![CDATA["<b>jtag_uart_system</b>" instantiated <b>altera_avalon_jtag_uart</b> "<b>uart</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>

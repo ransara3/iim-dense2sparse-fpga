@@ -1,0 +1,19 @@
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system.qsys --synthesis=VERILOG --output-directory=/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/quartus/jtag_uart_system/synthesis --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading quartus/jtag_uart_system.qsys
+Progress: Reading input file
+Progress: Adding uart [altera_avalon_jtag_uart 20.1]
+Progress: Parameterizing module uart
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: jtag_uart_system.uart: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+Info: jtag_uart_system: Generating jtag_uart_system "jtag_uart_system" for QUARTUS_SYNTH
+Info: uart: Starting RTL generation for module 'jtag_uart_system_uart'
+Info: uart:   Generation command is [exec /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/linux64/perl/bin/perl -I /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/linux64/perl/lib -I /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/sopc_builder/bin/europa -I /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/sopc_builder/bin -I /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/../ip/altera/sopc_builder_ip/common -I /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- /media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=jtag_uart_system_uart --dir=/tmp/alt0746_548751950305384072.dir/0002_uart_gen/ --quartus_dir=/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/home/ransara/intelFPGA_lite/20.1/quartus --verilog --config=/tmp/alt0746_548751950305384072.dir/0002_uart_gen//jtag_uart_system_uart_component_configuration.pl  --do_build_sim=0  ]
+Info: uart: Done RTL generation for module 'jtag_uart_system_uart'
+Info: uart: "jtag_uart_system" instantiated altera_avalon_jtag_uart "uart"
+Info: jtag_uart_system: Done "jtag_uart_system" with 2 modules, 2 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

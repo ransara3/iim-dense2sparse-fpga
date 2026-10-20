@@ -186,7 +186,7 @@ The UART/top-level protocol test can be run independently:
 ```bash
 iverilog -g2012 -s tb_de2_115_uart_top \
   -o /tmp/tb_de2_115_uart_top.vvp \
-  rtl/uart_8n1.sv rtl/margin_gated_ccl.sv rtl/de2_115_uart_top.sv \
+  rtl/uart_8n1.sv rtl/margin_gated_ccl.sv rtl/dense2sparse_protocol.sv rtl/de2_115_uart_top.sv \
   sim/tb_de2_115_uart_top.sv
 vvp /tmp/tb_de2_115_uart_top.vvp
 ```
@@ -196,12 +196,27 @@ the emitted areas and coordinate sums exactly with `streaming_ccl`. Simulated
 cycle counts are functional/scheduling data, not FPGA timing or throughput
 measurements.
 
+### USB-Blaster-only JTAG UART bring-up
+
+Use `quartus/de2_115_jtag.qpf` to validate maps through the USB-Blaster cable
+without RS-232 hardware. Generate Intel's JTAG UART IP first, compile and
+program the new project, then run `scripts/uart_host.py --transport jtag` with
+the Quartus JTAG Atlantic library. Full commands and a deterministic two-component
+board test are in [USB_BLASTER.md](docs/USB_BLASTER.md).
+
+The new shared `rtl/dense2sparse_protocol.sv` retains the same binary packet
+format and CPU comparison. `rtl/jtag_uart_transport.sv` polls the exported
+Avalon registers, honoring RX backpressure, bus wait states, and TX FIFO space.
+The JTAG interface needs no Nios processor. The RS-232 project below remains
+available. Generated IP, Quartus compilation, and physical JTAG transfers must
+still be verified on your installation and board.
+
 ### DE2-115 UART bring-up and hardware evaluation (Step 5)
 
 `rtl/de2_115_board_top.sv` and `quartus/de2_115_uart.qsf` provide a DE2-115
 wrapper for `CLOCK_50`, `KEY[0]`, and the board's RS-232 transceiver pins. The
 assignments follow the [Terasic DE2-115 user manual](https://www.terasic.com.tw/wiki/File:DE2_115_User_manual_2013.pdf).
-The Quartus project targets EP4CE115F29C7N at 50 MHz; it still needs to be
+The Quartus project targets EP4CE115F29C7 at 50 MHz; it still needs to be
 compiled with a Quartus release that supports Cyclone IV E.
 
 The UART protocol uses 115200 baud, 8-N-1:
