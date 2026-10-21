@@ -1,0 +1,230 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{Madrid}
+\usepackage{booktabs,amsmath,graphicx}
+\definecolor{passgreen}{RGB}{0,110,60}
+\definecolor{failred}{RGB}{180,30,30}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\title{CPU vs FPGA: Dense-to-Sparse Algorithm Comparison}
+\author{Ransara}
+\date{20 October 2026}
+\begin{document}
+\begin{frame}{What are we comparing?}
+\begin{center}\Large CPU baseline vs proposed FPGA decoder\end{center}
+\medskip
+\begin{tabular}{p{0.46\linewidth}p{0.46\linewidth}}
+\toprule
+\textbf{Baseline on CPU} & \textbf{Proposed algorithm on FPGA} \\
+\midrule
+Direct thresholding: $B=\mathbf{1}[P\ge T]$ & Margin-gated thresholding \\
+OpenCV connected-component labeling & Streaming connected-component labeling \\
+CPU runtime measured with Python timer & FPGA active cycles measured by hardware \\
+\bottomrule
+\end{tabular}
+\medskip
+\begin{itemize}
+\item Identical 8-bit confidence/threshold maps, 4-connectivity, minimum area 3.
+\item 20 distinct photos; one $32\times32$ crop per photo.
+\item Synthetic maps generated from annotations; neural-network inference excluded.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Both algorithms on CPU: same results, different runtimes}
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Map & Streaming heads & OpenCV heads & Streaming (s) & OpenCV (s) \\
+\midrule
+0002 & 29 & 29 & 0.22 & 0.005 \\
+0004 & 87 & 87 & 0.06 & 0.001 \\
+0005 & 5 & 5 & 0.04 & 0.000* \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item Margin-gated binarization matched direct $P\geq T$ in all 20 random trials.
+\item Streaming CCL and OpenCV matched head counts and centroid locations on all three saved maps.
+\item OpenCV is faster here: its compiled implementation is compared with a Python streaming reference.
+\item This establishes CPU reference agreement, not FPGA acceleration. Runtime is not proportional to head count.
+\end{itemize}
+\scriptsize User-recorded \texttt{validate.py} output; saved full-size binary maps. CCL timings exclude binarization and are single-run measurements. *0.000 s is rounded output, not zero execution time. These differ from the later crop timing protocol.
+\end{frame}
+
+\begin{frame}{FPGA Board: Terasic DE2-115}
+\centering
+\IfFileExists{assets/fpga_board.jpg}{%
+\includegraphics[width=0.92\linewidth,height=0.78\textheight,keepaspectratio]{assets/fpga_board.jpg}%
+}{%
+\fbox{\parbox[c][0.65\textheight][c]{0.88\linewidth}{\centering
+Add your FPGA board photograph\\[1em]
+\texttt{assets/fpga\_board.jpg}}}%
+}
+\end{frame}
+
+\begin{frame}{Why use cropped pictures?}
+\begin{columns}[T]
+\column{0.52\textwidth}
+\begin{itemize}
+\item The original large configuration spent \textbf{over five hours in synthesis}.
+\item Reduce label slots from 2048 to 64 and input limits to $32\times32$ for practical bring-up.
+\item Give CPU and FPGA the \textbf{same crop} for a fair input comparison.
+\item Small crops make failures easier to inspect and reproduce.
+\end{itemize}
+\column{0.44\textwidth}
+\centering
+\IfFileExists{assets/long_compilation.png}{
+\includegraphics[width=\linewidth,height=3.6cm,keepaspectratio]{assets/long_compilation.png}
+}{\fbox{\parbox[c][3.1cm][c]{0.9\linewidth}{\centering Insert five-hour compilation screenshot\\[1em]\scriptsize\texttt{assets/long\_compilation.png}}}}
+\par\smallskip\scriptsize Evidence: original synthesis run exceeded five hours.
+\end{columns}
+\begin{alertblock}{What the experiment covers}
+One crop per photo, not full-photo localization. Crop boundaries may cut heads; small-crop results do not establish full-image performance. The smaller build still has a timing violation.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{How are the three times measured?}
+\begin{align*}
+T_{\mathrm{CPU}} &= \operatorname{median}_{i}(t_{\mathrm{end},i}-t_{\mathrm{start},i}) \\
+T_{\mathrm{FPGA,active}} &= \frac{N_{\mathrm{active\ cycles}}}{f_{\mathrm{clock}}}
+\end{align*}
+\begin{itemize}
+\item CPU timing includes quantization, direct thresholding and OpenCV CCL.
+\item FPGA active time excludes communication stalls as defined by the RTL counter.
+\item Round-trip time includes host quantization, sending maps, processing and receiving results; excludes opening JTAG.
+\end{itemize}
+\begin{exampleblock}{Example: 4,193 cycles at an assumed 50 MHz}
+\[
+T_{\mathrm{FPGA,active}}=\frac{4193}{50\times10^6}
+=83.86\times10^{-6}\ \mathrm{s}=83.86\ \mu\mathrm{s}
+\]
+\end{exampleblock}
+\scriptsize The board fails its 50 MHz setup requirement; this is a cycle-based estimate, not evidence of timing-clean correct operation.
+\end{frame}
+
+\begin{frame}{Results for 20 photo crops}
+\centering\scriptsize
+\setlength{\tabcolsep}{8pt}\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{lrrrrc}
+\toprule
+Photo & Heads CPU/FPGA & CPU ($\mu$s) & FPGA active* ($\mu$s) & Round-trip (s) & Match \\
+\midrule
+0003 & 0/0 & 15.9 & 83.84 & 1.886 & \textcolor{passgreen}{PASS} \\
+0007 & 1/1 & 16.0 & 83.86 & 1.554 & \textcolor{passgreen}{PASS} \\
+0009 & 1/1 & 53.5 & 83.86 & 1.361 & \textcolor{passgreen}{PASS} \\
+0011 & 1/1 & 49.8 & 83.86 & 0.955 & \textcolor{passgreen}{PASS} \\
+0013 & 0/0 & 46.4 & 83.84 & 1.466 & \textcolor{passgreen}{PASS} \\
+0042 & 1/1 & 41.1 & 83.86 & 1.154 & \textcolor{passgreen}{PASS} \\
+0056 & 0/0 & 50.0 & 83.84 & 1.056 & \textcolor{passgreen}{PASS} \\
+0058 & 1/1 & 50.0 & 83.86 & 1.055 & \textcolor{passgreen}{PASS} \\
+0068 & 4/2 & 101.4 & 83.88 & 1.759 & \textcolor{failred}{FAIL} \\
+0070 & 1/1 & 49.9 & 83.86 & 1.560 & \textcolor{passgreen}{PASS} \\
+0085 & 1/1 & 51.5 & 83.86 & 1.770 & \textcolor{passgreen}{PASS} \\
+0092 & 0/0 & 49.7 & 83.84 & 1.058 & \textcolor{passgreen}{PASS} \\
+0105 & 1/1 & 41.7 & 83.86 & 1.056 & \textcolor{passgreen}{PASS} \\
+0111 & 0/0 & 93.6 & 83.84 & 1.055 & \textcolor{passgreen}{PASS} \\
+0116 & 4/4 & 44.7 & 83.92 & 0.957 & \textcolor{failred}{FAIL} \\
+0125 & 1/1 & 49.8 & 83.86 & 1.466 & \textcolor{passgreen}{PASS} \\
+0133 & 1/1 & 49.9 & 83.86 & 1.069 & \textcolor{passgreen}{PASS} \\
+0134 & 3/2 & 43.7 & 83.88 & 0.965 & \textcolor{failred}{FAIL} \\
+0136 & 2/2 & 106.1 & 83.88 & 0.953 & \textcolor{passgreen}{PASS} \\
+0138 & 1/1 & 48.5 & 83.86 & 0.845 & \textcolor{passgreen}{PASS} \\
+\bottomrule
+\end{tabular}
+\par\medskip *Estimated from active cycles at 50 MHz; timing closure is not met. Match checks exact component area and coordinate sums, not just counts.
+\end{frame}
+
+\begin{frame}{Timing and correctness statistics}
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Statistic} & \textbf{Result} \\
+\midrule
+Mean of 20 CPU median runtimes & $52.66\ \mu$s \\
+Mean estimated FPGA active time* & $83.86\ \mu$s \\
+Mean FPGA round-trip time & $1.250$ s \\
+Ratio of mean active FPGA / CPU time & $1.59\times$ \\
+Exact component matches & 17/20 (85\%) \\
+Head-count matches & 18/20 (90\%) \\
+Total components CPU / FPGA & 24 / 21 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item CPU is faster on average for these small crops; FPGA acceleration is not demonstrated.
+\item JTAG communication dominates round-trip latency.
+\item Agreement percentages are \textbf{not} ground-truth detection accuracy; five passing crops contain no components.
+\end{itemize}
+\scriptsize *At assumed 50 MHz; current setup slack is $-41.265$ ns. CPU timing excludes conversion of labels into exact validation records.
+\end{frame}
+
+\begin{frame}{One full photo: coverage using 1,230 independent tiles}
+\small
+Photo 0002: $1300\times955$ pixels, covered from top-left to bottom-right.\par\medskip
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Output comparison} & \textbf{Result} \\
+\midrule
+Sum of tile components, CPU / FPGA & 66 / 63 \\
+Matching point counts & 1,222 / 1,230 (99.35\%) \\
+Exactly matching component records & 1,179 / 1,230 (95.85\%) \\
+Different counts & 8 tiles \\
+Equal counts, different records & 43 tiles \\
+Empty CPU tiles & 1,174 \\
+Nonempty CPU tiles with exact agreement & \textbf{5 / 56 (8.93\%)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{alertblock}{Interpretation}
+Empty tiles dominate the overall agreement. Only 5 of 56 nonempty CPU tiles match exactly. This is \textbf{not} 95.85\% head-detection accuracy.
+\end{alertblock}
+\scriptsize Independent tile decoding, no boundary stitching: 66 and 63 are not full-photo crowd counts. Exact agreement checks area and coordinate sums.
+\end{frame}
+
+\begin{frame}{One full photo: timing across all tiles}
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Timing metric} & \textbf{CPU} & \textbf{FPGA active estimate*} & \textbf{Round-trip} \\
+\midrule
+Mean per tile & $50.42\ \mu$s & $83.04\ \mu$s & $1.086$ s \\
+Median per tile & $45.82\ \mu$s & $83.84\ \mu$s & $1.054$ s \\
+Sum across tiles & $62.02$ ms & $102.14$ ms & $1335.22$ s \\
+\bottomrule
+\end{tabular}
+\end{center}
+\[
+\frac{\sum T_{\mathrm{FPGA,active}}}{\sum T_{\mathrm{CPU}}}
+=\frac{102.14}{62.02}\approx1.65
+\]
+\begin{itemize}
+\item FPGA active estimate is \textbf{1.65 times the CPU time}; no workload-level speedup.
+\item JTAG round-trip totals approximately \textbf{22.25 minutes}.
+\item Right/bottom tiles may be smaller than $32\times32$, affecting average cycles.
+\end{itemize}
+\scriptsize *Cycles divided by assumed 50 MHz; timing closure is unmet. CPU sum adds per-tile medians, not a continuous full-image CPU run. Round-trip sum excludes setup, reporting and other outer-loop work. Source: \texttt{exp/0002\_all\_tiles.json}.
+\end{frame}
+
+\begin{frame}{FPGA potential: stable processing time, speedup still to verify}
+\begin{block}{Promising characteristic}
+For equal-size inputs, this implementation has nearly constant active cycles: about $83.84$--$83.92\ \mu$s at an assumed 50 MHz. More emitted heads add little counted work.
+\end{block}
+\small
+\begin{tabular}{lrrrl}
+\toprule
+Example & CPU heads & CPU ($\mu$s) & FPGA active* ($\mu$s) & Interpretation \\
+\midrule
+0136 & 2 & 106.1 & 83.88 & Lower estimate; exact match \\
+0116 & 4 & 44.7 & 83.92 & CPU faster; component mismatch \\
+\bottomrule
+\end{tabular}
+\medskip
+\begin{itemize}
+\item In 0136, estimated core time is about 21\% lower than CPU time. This is provisional, not a timing-verified speedup.
+\item Across the full-photo tiles, the FPGA estimate is $1.65\times$ the CPU time; only 5/56 nonempty tiles match exactly. More heads do not establish speedup.
+\item Next: fix timing and correctness, then evaluate denser inputs and a faster transfer path. Round-trip performance is currently much slower.
+\end{itemize}
+\href{run:assets/demo.mp4}{\beamergotobutton{Optional comparison video}}
+\hfill\scriptsize *50 MHz setup slack: $-41.265$ ns; correctness remains unresolved.
+\end{frame}
+\end{document}

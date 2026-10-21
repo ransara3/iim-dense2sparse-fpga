@@ -1,0 +1,7 @@
+[
+  {
+    "name": "0002",
+    "ok": false,
+    "error": "JTAG UART timed out; check programming and press KEY[0]."
+  }
+]

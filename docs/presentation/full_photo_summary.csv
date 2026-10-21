@@ -1,0 +1,12 @@
+metric,value
+tiles,1230
+cpu_components,66
+fpga_components,63
+count_matches,1222
+exact_matches,1179
+empty_cpu_tiles,1174
+nonempty_exact_matches,5
+nonempty_cpu_tiles,56
+cpu_sum_seconds,0.06202005645536701
+fpga_active_sum_seconds,0.10213715999999999
+roundtrip_sum_seconds,1335.2227814970247

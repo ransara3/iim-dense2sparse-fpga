@@ -1,0 +1,309 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{booktabs,graphicx,amsmath,array}
+\definecolor{passgreen}{RGB}{0,110,60}
+\definecolor{failred}{RGB}{180,30,30}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\newcommand{\evidence}[2]{\IfFileExists{assets/#1}{\includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{assets/#1}}{\fbox{\parbox[c][3.5cm][c]{0.93\linewidth}{\centering #2\\[1em]\scriptsize Add image: \texttt{\detokenize{assets/#1}}}}}}
+\title{Dense-to-Sparse Crowd Localization}
+\subtitle{Progress: CPU Reference, FPGA Implementation, and Validation}
+\author{Ransara}
+\date{20 October 2026}
+\begin{document}
+\begin{frame}\titlepage\end{frame}
+
+\begin{frame}{Objective and current scope}
+\begin{itemize}
+\item Convert confidence map $P(x,y)$ and threshold map $T(x,y)$ into sparse head coordinates.
+\item Compare an OpenCV CPU baseline with a margin-gated, streaming FPGA decoder.
+\item Accelerate the \textbf{decoder}; neural-network inference is outside this comparison.
+\item Current board build: DE2-115, $32\times32$ maximum input, 64 label slots, USB-Blaster communication.
+\item Current evidence: CPU reference checks pass; physical FPGA results contain mismatches and timing violations.
+\end{itemize}
+\begin{block}{Data limitation}The reported 20-photo experiment uses annotation-driven synthetic maps, one crop per distinct photo. It does not measure trained-model localization accuracy.\end{block}
+\end{frame}
+
+\begin{frame}{Baseline and proposed decoder}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Baseline: CPU / OpenCV}
+\begin{enumerate}
+\item Direct comparison $B=\mathbf{1}[P\geq T]$.
+\item OpenCV connected-component labeling.
+\item Filter small components; compute centroids.
+\end{enumerate}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{Proposed: margin-gated streaming CCL}
+\begin{enumerate}
+\item $P<0.2$: background; $P\geq0.7$: foreground.
+\item Compare against $T$ only in the ambiguous band.
+\item Streaming labels, equivalence resolution, component accumulation and closing.
+\end{enumerate}
+\end{block}
+\end{columns}
+\medskip
+Both use 4-connectivity and minimum area 3. Identical input quantization is required for the board comparison.
+\[
+(x_c,y_c)=\left(\frac{\sum x}{\mathrm{area}},\frac{\sum y}{\mathrm{area}}\right)
+\]
+\end{frame}
+
+\begin{frame}{Code upgrades: one-slide overview}
+\small
+\begin{tabular}{p{0.37\linewidth}p{0.56\linewidth}}
+\toprule
+Change & Purpose \\
+\midrule
+Shared packet engine and JTAG UART adapter & Transfer maps and results through USB-Blaster; retain the decoder. \\
+JTAG Quartus project and IP-generation Tcl & Generate Intel JTAG UART IP and integrate the board wrapper. \\
+Python JTAG Atlantic wrapper & Resolve Linux dependencies and C++ exports; transfer binary packets. \\
+\texttt{validate\_fpga.py} & Compare exact CPU/FPGA components, print head coordinates, save timings and JSON. \\
+Sample and tile preparation scripts & Prepare more photos or cover one full map with independent tiles. \\
+Small board configuration & Reduce input limits to $32\times32$ and label slots to 64 for bring-up. \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{CPU-only validation: what validate.py establishes}
+\begin{itemize}
+\item Margin-gated binarization equals direct $P\geq T$ in 20 random trials.
+\item Python streaming CCL is compared with OpenCV on the same saved binary masks.
+\item This stage runs \textbf{both implementations on the CPU}; no FPGA is involved.
+\end{itemize}
+\begin{center}
+\begin{tabular}{lrrc}
+\toprule
+Sample & Python components & OpenCV components & Centroid agreement \\
+\midrule
+0002 & 29 & 29 & PASS \\
+0004 & 87 & 87 & PASS \\
+0005 & 5 & 5 & PASS \\
+\bottomrule
+\end{tabular}
+\end{center}
+\small Rechecked for this presentation. The Python reference is a correctness model, not an optimized CPU implementation. These full-map tests differ from the later 32$\times$32 board tests.
+\end{frame}
+
+\begin{frame}{Physical FPGA implementation and validation path}
+\begin{center}
+\fbox{Python host}\ $\longrightarrow$\ \fbox{USB-Blaster / JTAG UART}\par\medskip
+$\longrightarrow$\ \fbox{Avalon adapter / packet engine}\par\medskip
+$\longrightarrow$\ \fbox{Margin-gated CCL}\ $\longrightarrow$\ \fbox{Component records}
+\end{center}
+\begin{itemize}
+\item Quartus: synthesis $\rightarrow$ fitting $\rightarrow$ assembly $\rightarrow$ timing analysis.
+\item Program the generated \texttt{.sof}; send identical 8-bit $P/T$ inputs to the CPU and board.
+\item Compare sorted $(\mathrm{area},\sum x,\sum y)$ records, not just head counts.
+\item A successful configuration download does \textbf{not} establish timing closure or algorithm correctness.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Compilation problems and actions taken}
+\small
+\begin{tabular}{p{0.29\linewidth}p{0.31\linewidth}p{0.32\linewidth}}
+\toprule
+Problem & Diagnosis & Action / status \\
+\midrule
+Undefined \texttt{jtag\_uart\_system} & Missing generated synthesis IP / QIP & Generate Qsys HDL and include its QIP. \\
+Qsys commands unavailable & Installation tools absent from PATH & Select a consistent Quartus environment. \\
+Tcl / device errors & Unsupported \texttt{file normalize}; device suffix & Remove unsupported path operation; use EP4CE115F29C7. \\
+Synthesis exceeded 5 hours & Large label storage and dependent combinational lookups & Reduce 2048 labels to 64 and frame limit to $32\times32$. \\
+Compilation completes, timing fails & Setup slack $-41.265$ ns at 50 MHz & \textbf{Unresolved:} pipeline / sequence lookups or use a slower physical clock. \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Compilation evidence: insert screenshots}
+\begin{columns}[T]
+\column{0.49\textwidth}\centering
+\evidence{long_compilation.png}{Original build: synthesis exceeded five hours}
+\column{0.49\textwidth}\centering
+\evidence{timing_report.png}{Small build: final timing report showing negative setup slack}
+\end{columns}
+\medskip\small The smaller build improved compilation feasibility; it did not resolve the 50 MHz timing requirement.
+\end{frame}
+
+\begin{frame}{Host integration problems and first board test}
+\begin{itemize}
+\item Missing shared-library symbols: preload matching Quartus clients in the required order.
+\item Missing API names: bind Quartus 25.1 C++ exports in the Python wrapper.
+\item JTAG UART node detected and connection established.
+\item Deterministic test passed: two area-4 components at $(0.5,0.5)$ and $(5.5,0.5)$; 390 active cycles.
+\item Realistic crops exposed discrepancies that this simple test did not reveal.
+\end{itemize}
+\begin{block}{Lesson}A simple smoke test establishes basic dataflow. Diverse masks and timing closure are necessary to establish reliable operation.\end{block}
+\end{frame}
+
+\begin{frame}{20-photo experiment: protocol and parameter definitions}
+\small
+\begin{itemize}
+\item 20 distinct JHU validation photos; one annotation-centered $32\times32$ crop per photo.
+\item Synthetic $P/T$ maps; shared unsigned round-to-nearest 8-bit quantization.
+\item CPU: direct thresholding + OpenCV, 4-connectivity, minimum area 3.
+\item FPGA: margin-gated thresholding + streaming CCL with matching settings.
+\end{itemize}
+\begin{tabular}{p{0.27\linewidth}p{0.66\linewidth}}
+\toprule
+Parameter & Interpretation \\
+\midrule
+CPU / FPGA heads & Number of components surviving the area filter. \\
+CPU time & Median of repeated CPU runs: quantization, binarization, OpenCV CCL. \\
+FPGA round-trip & Host quantization, transfer and result reception; excludes opening JTAG. \\
+Active cycles & Hardware counter excluding communication stalls as defined by the RTL. \\
+Estimated core time & Cycles / assumed 50 MHz; reliable operation requires timing closure. \\
+PASS / FAIL & Exact agreement / disagreement of component areas and coordinate sums. \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{20-photo results: exact component agreement}
+\centering\scriptsize
+\setlength{\tabcolsep}{9pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{lrrrrc}
+\toprule
+Photo & CPU heads & FPGA heads & CPU ($\mu$s) & Round-trip (s) & Result \\
+\midrule
+0003 & 0 & 0 & 15.9 & 1.886 & \textcolor{passgreen}{PASS} \\
+0007 & 1 & 1 & 16.0 & 1.554 & \textcolor{passgreen}{PASS} \\
+0009 & 1 & 1 & 53.5 & 1.361 & \textcolor{passgreen}{PASS} \\
+0011 & 1 & 1 & 49.8 & 0.955 & \textcolor{passgreen}{PASS} \\
+0013 & 0 & 0 & 46.4 & 1.466 & \textcolor{passgreen}{PASS} \\
+0042 & 1 & 1 & 41.1 & 1.154 & \textcolor{passgreen}{PASS} \\
+0056 & 0 & 0 & 50.0 & 1.056 & \textcolor{passgreen}{PASS} \\
+0058 & 1 & 1 & 50.0 & 1.055 & \textcolor{passgreen}{PASS} \\
+0068 & 4 & 2 & 101.4 & 1.759 & \textcolor{failred}{FAIL} \\
+0070 & 1 & 1 & 49.9 & 1.560 & \textcolor{passgreen}{PASS} \\
+0085 & 1 & 1 & 51.5 & 1.770 & \textcolor{passgreen}{PASS} \\
+0092 & 0 & 0 & 49.7 & 1.058 & \textcolor{passgreen}{PASS} \\
+0105 & 1 & 1 & 41.7 & 1.056 & \textcolor{passgreen}{PASS} \\
+0111 & 0 & 0 & 93.6 & 1.055 & \textcolor{passgreen}{PASS} \\
+0116 & 4 & 4 & 44.7 & 0.957 & \textcolor{failred}{FAIL} \\
+0125 & 1 & 1 & 49.8 & 1.466 & \textcolor{passgreen}{PASS} \\
+0133 & 1 & 1 & 49.9 & 1.069 & \textcolor{passgreen}{PASS} \\
+0134 & 3 & 2 & 43.7 & 0.965 & \textcolor{failred}{FAIL} \\
+0136 & 2 & 2 & 106.1 & 0.953 & \textcolor{passgreen}{PASS} \\
+0138 & 1 & 1 & 48.5 & 0.845 & \textcolor{passgreen}{PASS} \\
+\bottomrule
+\end{tabular}
+\par\medskip 17/20 exact matches; 18/20 head-count matches. These are decoder agreement rates, not detection accuracy.
+\end{frame}
+
+\begin{frame}{Failure analysis: equal counts are insufficient}
+\small
+\begin{tabular}{p{0.10\linewidth}p{0.13\linewidth}p{0.66\linewidth}}
+\toprule
+Photo & CPU/FPGA & Observed discrepancy \\
+\midrule
+0068 & 4 / 2 & One record matches; three CPU components are represented by one FPGA component with a different total area. \\
+0116 & 4 / 4 & Identical centroids; the component at crop $(16,16)$ has CPU area 5 versus FPGA area 3. \\
+0134 & 3 / 2 & Two CPU components appear as one FPGA component; their combined area and sums match the merged record. \\
+\bottomrule
+\end{tabular}
+\medskip
+\begin{alertblock}{Interpretation}
+Timing violations are a plausible contributor, not a proven sole cause. Reproduce failures in simulation and at a timing-clean physical clock to distinguish logic defects from timing failures.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Head locations and demonstration video}
+\begin{columns}[T]
+\column{0.53\textwidth}
+\begin{itemize}
+\item Crop coordinates: position within the tile.
+\item Source coordinates: crop position plus tile origin.
+\item Example: crop $(16,16)$ + origin $(961,561)$ = source $(977,577)$.
+\item These are decoded centroids, not automatically ground-truth annotations.
+\end{itemize}
+\medskip
+\href{run:assets/demo.mp4}{\beamergotobutton{Open 20-photo demonstration video}}
+\par\scriptsize External video: PDF viewer support varies. Keep the video available for separate playback.
+\column{0.43\textwidth}
+\evidence{validation_demo.png}{Insert terminal comparison or annotated crop screenshot}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Performance: what the measurements support}
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Measure & Observed result \\
+\midrule
+Mean of per-crop CPU medians & $52.66\ \mu$s \\
+Estimated active FPGA time & $83.84$--$83.92\ \mu$s \\
+Mean FPGA round-trip time & $1.250$ s \\
+Total components, CPU / FPGA & 24 / 21 \\
+Exact agreement & 17 / 20 crops \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item FPGA acceleration is \textbf{not demonstrated} by this experiment.
+\item JTAG transport dominates wall-clock latency; report it separately from active cycles.
+\item Small synthetic crops and failed timing limit performance conclusions.
+\item Five passing crops contain no components; more challenging cases are needed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Potential FPGA advantages and current limitations}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{Architectural opportunities}
+\begin{itemize}
+\item Streaming processing near the map producer.
+\item Custom precision and memory organization.
+\item Overlap input, processing and output.
+\item Avoid unnecessary threshold accesses through margin gating.
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{alertblock}{Not yet demonstrated here}
+\begin{itemize}
+\item Higher throughput or lower latency.
+\item Lower power or energy per image.
+\item Full-frame scalability.
+\item Reliable exact agreement across inputs.
+\end{itemize}
+\end{alertblock}
+\end{columns}
+\medskip FPGA benefits depend on architecture, implementation and measurement; using an FPGA alone does not guarantee them.
+\end{frame}
+
+\begin{frame}{Next steps: correctness first, then scale and benchmark}
+\begin{enumerate}
+\item \textbf{Close timing:} inspect critical paths; pipeline or sequence union-find reads; use synchronous block RAM where feasible.
+\item \textbf{Check the clock:} a slower experiment needs an actual divided/PLL clock and matching constraints. Editing only the SDC does not slow hardware.
+\item \textbf{Reproduce failures:} simulate exact failing maps, merges, border cases, label reuse and backpressure; rerun the board tests.
+\item \textbf{Scale coverage:} independent tiles cover a photo but require boundary stitching for full-photo component equivalence.
+\item \textbf{Measure fairly:} optimized CPU baseline, verified core clock, repeated board runs, resource use and measured power.
+\item \textbf{Use model outputs:} repeat on trained IIM maps and evaluate head localization against annotations separately.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Final assessment}
+\begin{block}{Completed}
+CPU reference agreement; quantization workflow; synthesizable integration; board programming; working USB-Blaster transfer; reproducible CPU-versus-board validator.
+\end{block}
+\begin{alertblock}{Current decision}
+\textbf{Partial functional success, not a validated accelerator.} The 20-crop run has 3 failures and the design violates its 50 MHz setup requirement. No speedup, energy saving or full-frame correctness claim is justified yet.
+\end{alertblock}
+\begin{block}{Immediate milestone}
+A timing-clean build that passes all existing component comparisons before increasing image size or claiming performance advantages.
+\end{block}
+\end{frame}
+
+\begin{frame}{Evidence and reproducibility}
+\small
+\begin{itemize}
+\item CPU checks: \texttt{reference\_algorithm/validate.py}.
+\item Board comparisons: \texttt{reference\_algorithm/validate\_fpga.py}.
+\item Experiment data: \texttt{exp/fpga\_samples\_20.json}.
+\item Timing evidence: \texttt{quartus/output\_files/de2\_115\_jtag.sta.summary}.
+\item Setup and commands: \texttt{docs/USB\_BLASTER.md}.
+\item Board results and table are from the recorded 20-crop run; CPU full-map counts were rechecked during presentation preparation.
+\end{itemize}
+\end{frame}
+\end{document}

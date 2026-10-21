@@ -176,6 +176,10 @@ def main() -> None:
 
     P = np.load(args.p_map)
     T = np.load(args.t_map)
+    if args.transport == "jtag":
+        shape = quantize_map(P, "P").shape
+        if any(dimension > 32 for dimension in shape):
+            parser.error("JTAG bring-up build supports at most 32x32 pixels; use a crop")
     start = time.perf_counter()
     expected = cpu_reference_records(P, T)
     cpu_seconds = time.perf_counter() - start

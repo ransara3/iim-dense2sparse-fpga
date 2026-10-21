@@ -1,0 +1,48 @@
+
+State Machine - |de2_115_jtag_top|jtag_uart_transport:transport|state
+Name state.POLL state.WRITE_TX state.READ_RX 
+state.POLL 0 0 0 
+state.READ_RX 1 0 1 
+state.WRITE_TX 1 1 0 
+
+State Machine - |de2_115_jtag_top|dense2sparse_protocol:protocol|tx_message_kind
+Name tx_message_kind.TX_FRAME_ACK tx_message_kind.TX_ROW_ACK tx_message_kind.TX_READY_ACK tx_message_kind.TX_COMPONENT tx_message_kind.TX_ERROR_ACK 
+tx_message_kind.TX_COMPONENT 0 0 0 0 0 
+tx_message_kind.TX_READY_ACK 0 0 1 1 0 
+tx_message_kind.TX_ROW_ACK 0 1 0 1 0 
+tx_message_kind.TX_FRAME_ACK 1 0 0 1 0 
+tx_message_kind.TX_ERROR_ACK 0 0 0 1 1 
+
+State Machine - |de2_115_jtag_top|dense2sparse_protocol:protocol|tx_state
+Name tx_state.TX_IDLE tx_state.TX_WAIT tx_state.TX_LAUNCH 
+tx_state.TX_IDLE 0 0 0 
+tx_state.TX_LAUNCH 1 0 1 
+tx_state.TX_WAIT 1 1 0 
+
+State Machine - |de2_115_jtag_top|dense2sparse_protocol:protocol|rx_state
+Name rx_state.RX_ERROR_ACK rx_state.RX_FRAME_ACK rx_state.RX_ROW_ACK rx_state.RX_ROW_END rx_state.RX_PIXEL_CORE rx_state.RX_PIXEL_T rx_state.RX_PIXEL_P rx_state.RX_WAIT_READY rx_state.RX_WAIT_CORE rx_state.RX_HEIGHT_HI rx_state.RX_HEIGHT_LO rx_state.RX_WIDTH_HI rx_state.RX_WIDTH_LO rx_state.RX_SYNC_G rx_state.RX_SYNC_M 
+rx_state.RX_SYNC_M 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+rx_state.RX_SYNC_G 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+rx_state.RX_WIDTH_LO 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+rx_state.RX_WIDTH_HI 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+rx_state.RX_HEIGHT_LO 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+rx_state.RX_HEIGHT_HI 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+rx_state.RX_WAIT_CORE 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+rx_state.RX_WAIT_READY 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+rx_state.RX_PIXEL_P 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+rx_state.RX_PIXEL_T 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+rx_state.RX_PIXEL_CORE 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+rx_state.RX_ROW_END 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+rx_state.RX_ROW_ACK 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+rx_state.RX_FRAME_ACK 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+rx_state.RX_ERROR_ACK 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |de2_115_jtag_top|dense2sparse_protocol:protocol|margin_gated_ccl:engine|state
+Name state.ST_DONE state.ST_EMIT state.ST_SWEEP state.ST_CANON state.ST_PIXELS state.ST_CLEAR state.ST_IDLE 
+state.ST_IDLE 0 0 0 0 0 0 0 
+state.ST_CLEAR 0 0 0 0 0 1 1 
+state.ST_PIXELS 0 0 0 0 1 0 1 
+state.ST_CANON 0 0 0 1 0 0 1 
+state.ST_SWEEP 0 0 1 0 0 0 1 
+state.ST_EMIT 0 1 0 0 0 0 1 
+state.ST_DONE 1 0 0 0 0 0 1 

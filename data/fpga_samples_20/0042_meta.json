@@ -1,0 +1,13 @@
+{
+  "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0042.jpg",
+  "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0042.txt",
+  "source_shape": [
+    400,
+    400
+  ],
+  "crop_origin": [
+    52,
+    210
+  ],
+  "map_source": "synthetic_from_ground_truth"
+}

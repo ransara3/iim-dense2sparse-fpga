@@ -2,10 +2,21 @@ import ctypes
 import unittest
 from unittest.mock import Mock, patch
 
-from scripts.jtag_atlantic import JtagAtlantic
+from scripts.jtag_atlantic import JtagAtlantic, bind_api, _SYMBOLS
+from types import SimpleNamespace
 
 
 class JtagAtlanticTests(unittest.TestCase):
+    def test_cpp_exports_are_bound(self):
+        functions = {symbol: Mock() for symbol in _SYMBOLS.values()}
+        lib = bind_api(SimpleNamespace(**functions))
+        for name, symbol in _SYMBOLS.items():
+            self.assertIs(getattr(lib, "jtag_atlantic_" + name), functions[symbol])
+
+    def test_missing_api_is_reported(self):
+        with self.assertRaises(RuntimeError):
+            bind_api(SimpleNamespace())
+
     def library(self):
         lib = Mock()
         lib.jtag_atlantic_open.return_value = 123

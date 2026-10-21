@@ -47,8 +47,8 @@ module tb_jtag_uart_transport;
             end
         end
     end
-    dense2sparse_protocol #(.MAX_WIDTH(8), .MAX_HEIGHT(4),
-        .MAX_LABELS(32), .MIN_AREA(2)) dut (
+    dense2sparse_protocol #(.MAX_WIDTH(32), .MAX_HEIGHT(32),
+        .MAX_LABELS(64), .MIN_AREA(2)) dut (
         .clk(clk), .reset_n(reset_n), .rx_data(rx_data), .rx_valid(rx_valid),
         .rx_framing_error(1'b0), .rx_ready(rx_ready), .tx_data(tx_data),
         .tx_start(tx_start), .tx_busy(tx_busy), .tx_done(tx_done), .overflow(overflow));

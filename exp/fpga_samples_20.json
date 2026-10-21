@@ -1,0 +1,1462 @@
+[
+  {
+    "ok": true,
+    "cpu_points": 0,
+    "fpga_points": 0,
+    "cpu_median_seconds": 1.5893499949015677e-05,
+    "fpga_roundtrip_seconds": 1.886474813996756,
+    "rtl_active_cycles": 4192,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.384e-05,
+    "expected_records": [],
+    "actual_records": [],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 0,
+      "points": [],
+      "rtl_active_cycles": 4192
+    },
+    "name": "0003",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0003.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0003.txt",
+      "source_shape": [
+        750,
+        1000
+      ],
+      "crop_origin": [
+        483,
+        331
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [],
+    "fpga_heads": []
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 1.6006499208742753e-05,
+    "fpga_roundtrip_seconds": 1.5539184490044136,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0007",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0007.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0007.txt",
+      "source_shape": [
+        1080,
+        1920
+      ],
+      "crop_origin": [
+        961,
+        561
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 977.0,
+        "image_y": 577.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 977.0,
+        "image_y": 577.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 5.352950392989442e-05,
+    "fpga_roundtrip_seconds": 1.3607812669943087,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0009",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0009.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0009.txt",
+      "source_shape": [
+        537,
+        959
+      ],
+      "crop_origin": [
+        169,
+        273
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 185.0,
+        "image_y": 289.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 185.0,
+        "image_y": 289.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.975100091542117e-05,
+    "fpga_roundtrip_seconds": 0.9549470389974886,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        61,
+        976,
+        976
+      ]
+    ],
+    "actual_records": [
+      [
+        61,
+        976,
+        976
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 61
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0011",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0011.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0011.txt",
+      "source_shape": [
+        320,
+        640
+      ],
+      "crop_origin": [
+        58,
+        160
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 61,
+        "image_x": 74.0,
+        "image_y": 176.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 61,
+        "image_x": 74.0,
+        "image_y": 176.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 0,
+    "fpga_points": 0,
+    "cpu_median_seconds": 4.6400498831644654e-05,
+    "fpga_roundtrip_seconds": 1.4657284900022205,
+    "rtl_active_cycles": 4192,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.384e-05,
+    "expected_records": [],
+    "actual_records": [],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 0,
+      "points": [],
+      "rtl_active_cycles": 4192
+    },
+    "name": "0013",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0013.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0013.txt",
+      "source_shape": [
+        1171,
+        3815
+      ],
+      "crop_origin": [
+        3437,
+        185
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [],
+    "fpga_heads": []
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.1125498682959005e-05,
+    "fpga_roundtrip_seconds": 1.153748019998602,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        61,
+        976,
+        976
+      ]
+    ],
+    "actual_records": [
+      [
+        61,
+        976,
+        976
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 61
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0042",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0042.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0042.txt",
+      "source_shape": [
+        400,
+        400
+      ],
+      "crop_origin": [
+        52,
+        210
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 61,
+        "image_x": 68.0,
+        "image_y": 226.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 61,
+        "image_x": 68.0,
+        "image_y": 226.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 0,
+    "fpga_points": 0,
+    "cpu_median_seconds": 5.001950194127858e-05,
+    "fpga_roundtrip_seconds": 1.0560526100016432,
+    "rtl_active_cycles": 4192,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.384e-05,
+    "expected_records": [],
+    "actual_records": [],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 0,
+      "points": [],
+      "rtl_active_cycles": 4192
+    },
+    "name": "0056",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0056.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0056.txt",
+      "source_shape": [
+        1365,
+        2048
+      ],
+      "crop_origin": [
+        1472,
+        339
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [],
+    "fpga_heads": []
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.9959999159909785e-05,
+    "fpga_roundtrip_seconds": 1.0554792420007288,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "actual_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 37
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0058",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0058.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0058.txt",
+      "source_shape": [
+        330,
+        460
+      ],
+      "crop_origin": [
+        403,
+        195
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 419.0,
+        "image_y": 211.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 419.0,
+        "image_y": 211.0
+      }
+    ]
+  },
+  {
+    "ok": false,
+    "cpu_points": 4,
+    "fpga_points": 2,
+    "cpu_median_seconds": 0.00010137099889107049,
+    "fpga_roundtrip_seconds": 1.7585609660018235,
+    "rtl_active_cycles": 4194,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.388e-05,
+    "expected_records": [
+      [
+        16,
+        371,
+        481
+      ],
+      [
+        28,
+        93,
+        476
+      ],
+      [
+        34,
+        861,
+        388
+      ],
+      [
+        36,
+        593,
+        563
+      ]
+    ],
+    "actual_records": [
+      [
+        16,
+        371,
+        481
+      ],
+      [
+        98,
+        1547,
+        1427
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 2,
+      "points": [
+        {
+          "x": 15.785714285714286,
+          "y": 14.561224489795919,
+          "area": 98
+        },
+        {
+          "x": 23.1875,
+          "y": 30.0625,
+          "area": 16
+        }
+      ],
+      "rtl_active_cycles": 4194
+    },
+    "name": "0068",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0068.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0068.txt",
+      "source_shape": [
+        545,
+        960
+      ],
+      "crop_origin": [
+        583,
+        184
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 23.1875,
+        "y": 30.0625,
+        "area": 16,
+        "image_x": 606.1875,
+        "image_y": 214.0625
+      },
+      {
+        "x": 3.3214285714285716,
+        "y": 17.0,
+        "area": 28,
+        "image_x": 586.3214285714286,
+        "image_y": 201.0
+      },
+      {
+        "x": 25.323529411764707,
+        "y": 11.411764705882353,
+        "area": 34,
+        "image_x": 608.3235294117648,
+        "image_y": 195.41176470588235
+      },
+      {
+        "x": 16.47222222222222,
+        "y": 15.63888888888889,
+        "area": 36,
+        "image_x": 599.4722222222222,
+        "image_y": 199.63888888888889
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 23.1875,
+        "y": 30.0625,
+        "area": 16,
+        "image_x": 606.1875,
+        "image_y": 214.0625
+      },
+      {
+        "x": 15.785714285714286,
+        "y": 14.561224489795919,
+        "area": 98,
+        "image_x": 598.7857142857143,
+        "image_y": 198.5612244897959
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.989599983673543e-05,
+    "fpga_roundtrip_seconds": 1.560239382997679,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0070",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0070.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0070.txt",
+      "source_shape": [
+        576,
+        1024
+      ],
+      "crop_origin": [
+        717,
+        167
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 733.0,
+        "image_y": 183.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 733.0,
+        "image_y": 183.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 5.151650111656636e-05,
+    "fpga_roundtrip_seconds": 1.77036313899589,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "actual_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 37
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0085",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0085.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0085.txt",
+      "source_shape": [
+        445,
+        933
+      ],
+      "crop_origin": [
+        500,
+        112
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 516.0,
+        "image_y": 128.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 516.0,
+        "image_y": 128.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 0,
+    "fpga_points": 0,
+    "cpu_median_seconds": 4.973250179318711e-05,
+    "fpga_roundtrip_seconds": 1.0584705299988855,
+    "rtl_active_cycles": 4192,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.384e-05,
+    "expected_records": [],
+    "actual_records": [],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 0,
+      "points": [],
+      "rtl_active_cycles": 4192
+    },
+    "name": "0092",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0092.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0092.txt",
+      "source_shape": [
+        554,
+        960
+      ],
+      "crop_origin": [
+        394,
+        283
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [],
+    "fpga_heads": []
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.169999738223851e-05,
+    "fpga_roundtrip_seconds": 1.05595685300068,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        21,
+        336,
+        336
+      ]
+    ],
+    "actual_records": [
+      [
+        21,
+        336,
+        336
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 21
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0105",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0105.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0105.txt",
+      "source_shape": [
+        1449,
+        3912
+      ],
+      "crop_origin": [
+        1427,
+        92
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 21,
+        "image_x": 1443.0,
+        "image_y": 108.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 21,
+        "image_x": 1443.0,
+        "image_y": 108.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 0,
+    "fpga_points": 0,
+    "cpu_median_seconds": 9.358050374430604e-05,
+    "fpga_roundtrip_seconds": 1.0546435159994871,
+    "rtl_active_cycles": 4192,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.384e-05,
+    "expected_records": [],
+    "actual_records": [],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 0,
+      "points": [],
+      "rtl_active_cycles": 4192
+    },
+    "name": "0111",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0111.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0111.txt",
+      "source_shape": [
+        412,
+        650
+      ],
+      "crop_origin": [
+        138,
+        262
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [],
+    "fpga_heads": []
+  },
+  {
+    "ok": false,
+    "cpu_points": 4,
+    "fpga_points": 4,
+    "cpu_median_seconds": 4.4723503378918394e-05,
+    "fpga_roundtrip_seconds": 0.956817897997098,
+    "rtl_active_cycles": 4196,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.392e-05,
+    "expected_records": [
+      [
+        5,
+        80,
+        80
+      ],
+      [
+        6,
+        3,
+        108
+      ],
+      [
+        6,
+        144,
+        3
+      ],
+      [
+        9,
+        36,
+        270
+      ]
+    ],
+    "actual_records": [
+      [
+        3,
+        48,
+        48
+      ],
+      [
+        6,
+        3,
+        108
+      ],
+      [
+        6,
+        144,
+        3
+      ],
+      [
+        9,
+        36,
+        270
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 4,
+      "points": [
+        {
+          "x": 24.0,
+          "y": 0.5,
+          "area": 6
+        },
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 3
+        },
+        {
+          "x": 0.5,
+          "y": 18.0,
+          "area": 6
+        },
+        {
+          "x": 4.0,
+          "y": 30.0,
+          "area": 9
+        }
+      ],
+      "rtl_active_cycles": 4196
+    },
+    "name": "0116",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0116.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0116.txt",
+      "source_shape": [
+        1504,
+        4176
+      ],
+      "crop_origin": [
+        1102,
+        729
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 5,
+        "image_x": 1118.0,
+        "image_y": 745.0
+      },
+      {
+        "x": 0.5,
+        "y": 18.0,
+        "area": 6,
+        "image_x": 1102.5,
+        "image_y": 747.0
+      },
+      {
+        "x": 24.0,
+        "y": 0.5,
+        "area": 6,
+        "image_x": 1126.0,
+        "image_y": 729.5
+      },
+      {
+        "x": 4.0,
+        "y": 30.0,
+        "area": 9,
+        "image_x": 1106.0,
+        "image_y": 759.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 3,
+        "image_x": 1118.0,
+        "image_y": 745.0
+      },
+      {
+        "x": 0.5,
+        "y": 18.0,
+        "area": 6,
+        "image_x": 1102.5,
+        "image_y": 747.0
+      },
+      {
+        "x": 24.0,
+        "y": 0.5,
+        "area": 6,
+        "image_x": 1126.0,
+        "image_y": 729.5
+      },
+      {
+        "x": 4.0,
+        "y": 30.0,
+        "area": 9,
+        "image_x": 1106.0,
+        "image_y": 759.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.983449980500154e-05,
+    "fpga_roundtrip_seconds": 1.4655384889993002,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0125",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0125.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0125.txt",
+      "source_shape": [
+        902,
+        1800
+      ],
+      "crop_origin": [
+        970,
+        861
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 986.0,
+        "image_y": 877.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 986.0,
+        "image_y": 877.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.989150329492986e-05,
+    "fpga_roundtrip_seconds": 1.0687550240036217,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "actual_records": [
+      [
+        37,
+        592,
+        592
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 37
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0133",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0133.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0133.txt",
+      "source_shape": [
+        1237,
+        2200
+      ],
+      "crop_origin": [
+        1325,
+        574
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 1341.0,
+        "image_y": 590.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 37,
+        "image_x": 1341.0,
+        "image_y": 590.0
+      }
+    ]
+  },
+  {
+    "ok": false,
+    "cpu_points": 3,
+    "fpga_points": 2,
+    "cpu_median_seconds": 4.3735002691391855e-05,
+    "fpga_roundtrip_seconds": 0.9650437250020332,
+    "rtl_active_cycles": 4194,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.388e-05,
+    "expected_records": [
+      [
+        10,
+        5,
+        130
+      ],
+      [
+        28,
+        457,
+        448
+      ],
+      [
+        28,
+        775,
+        448
+      ]
+    ],
+    "actual_records": [
+      [
+        10,
+        5,
+        130
+      ],
+      [
+        56,
+        1232,
+        896
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 2,
+      "points": [
+        {
+          "x": 0.5,
+          "y": 13.0,
+          "area": 10
+        },
+        {
+          "x": 22.0,
+          "y": 16.0,
+          "area": 56
+        }
+      ],
+      "rtl_active_cycles": 4194
+    },
+    "name": "0134",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0134.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0134.txt",
+      "source_shape": [
+        2736,
+        3648
+      ],
+      "crop_origin": [
+        871,
+        1178
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 0.5,
+        "y": 13.0,
+        "area": 10,
+        "image_x": 871.5,
+        "image_y": 1191.0
+      },
+      {
+        "x": 16.321428571428573,
+        "y": 16.0,
+        "area": 28,
+        "image_x": 887.3214285714286,
+        "image_y": 1194.0
+      },
+      {
+        "x": 27.678571428571427,
+        "y": 16.0,
+        "area": 28,
+        "image_x": 898.6785714285714,
+        "image_y": 1194.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 0.5,
+        "y": 13.0,
+        "area": 10,
+        "image_x": 871.5,
+        "image_y": 1191.0
+      },
+      {
+        "x": 22.0,
+        "y": 16.0,
+        "area": 56,
+        "image_x": 893.0,
+        "image_y": 1194.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 2,
+    "fpga_points": 2,
+    "cpu_median_seconds": 0.00010613300037221052,
+    "fpga_roundtrip_seconds": 0.9527437380020274,
+    "rtl_active_cycles": 4194,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.388e-05,
+    "expected_records": [
+      [
+        5,
+        65,
+        0
+      ],
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        5,
+        65,
+        0
+      ],
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 2,
+      "points": [
+        {
+          "x": 13.0,
+          "y": 0.0,
+          "area": 5
+        },
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4194
+    },
+    "name": "0136",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0136.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0136.txt",
+      "source_shape": [
+        360,
+        456
+      ],
+      "crop_origin": [
+        299,
+        225
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 13.0,
+        "y": 0.0,
+        "area": 5,
+        "image_x": 312.0,
+        "image_y": 225.0
+      },
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 315.0,
+        "image_y": 241.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 13.0,
+        "y": 0.0,
+        "area": 5,
+        "image_x": 312.0,
+        "image_y": 225.0
+      },
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 315.0,
+        "image_y": 241.0
+      }
+    ]
+  },
+  {
+    "ok": true,
+    "cpu_points": 1,
+    "fpga_points": 1,
+    "cpu_median_seconds": 4.8506000894121826e-05,
+    "fpga_roundtrip_seconds": 0.845102234998194,
+    "rtl_active_cycles": 4193,
+    "assumed_clock_hz": 50000000,
+    "estimated_core_seconds": 8.386e-05,
+    "expected_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "actual_records": [
+      [
+        69,
+        1104,
+        1104
+      ]
+    ],
+    "shape": [
+      32,
+      32
+    ],
+    "fpga_result": {
+      "num": 1,
+      "points": [
+        {
+          "x": 16.0,
+          "y": 16.0,
+          "area": 69
+        }
+      ],
+      "rtl_active_cycles": 4193
+    },
+    "name": "0138",
+    "metadata": {
+      "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/images/0138.jpg",
+      "annotations": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/jhu_crowd_v2.0/val/gt/0138.txt",
+      "source_shape": [
+        720,
+        1280
+      ],
+      "crop_origin": [
+        1107,
+        466
+      ],
+      "map_source": "synthetic_from_ground_truth"
+    },
+    "cpu_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 1123.0,
+        "image_y": 482.0
+      }
+    ],
+    "fpga_heads": [
+      {
+        "x": 16.0,
+        "y": 16.0,
+        "area": 69,
+        "image_x": 1123.0,
+        "image_y": 482.0
+      }
+    ]
+  }
+]

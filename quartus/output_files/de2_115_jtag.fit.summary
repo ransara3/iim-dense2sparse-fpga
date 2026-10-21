@@ -1,0 +1,16 @@
+Fitter Status : Successful - Tue Oct 20 20:08:39 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+Revision Name : de2_115_jtag
+Top-level Entity Name : de2_115_jtag_top
+Family : Cyclone IV E
+Device : EP4CE115F29C7
+Timing Models : Final
+Total logic elements : 19,761 / 114,480 ( 17 % )
+    Total combinational functions : 18,042 / 114,480 ( 16 % )
+    Dedicated logic registers : 8,071 / 114,480 ( 7 % )
+Total registers : 8071
+Total pins : 5 / 529 ( < 1 % )
+Total virtual pins : 0
+Total memory bits : 1,024 / 3,981,312 ( < 1 % )
+Embedded Multiplier 9-bit elements : 0 / 532 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )

@@ -14,7 +14,10 @@ module de2_115_jtag_top (
     wire rx_valid, rx_ready, tx_start, tx_busy, tx_done;
     wire address, chipselect, read_n, write_n, waitrequest;
     wire [31:0] writedata, readdata;
-    dense2sparse_protocol protocol (
+    // Small USB-Blaster bring-up build; full-size CCL needs storage redesign.
+    dense2sparse_protocol #(
+        .MAX_WIDTH(32), .MAX_HEIGHT(32), .MAX_LABELS(64)
+    ) protocol (
         .clk(CLOCK_50), .reset_n(reset_n), .rx_data(rx_data),
         .rx_valid(rx_valid), .rx_framing_error(1'b0), .rx_ready(rx_ready),
         .tx_data(tx_data), .tx_start(tx_start), .tx_busy(tx_busy),

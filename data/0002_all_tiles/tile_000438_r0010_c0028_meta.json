@@ -1,0 +1,19 @@
+{
+  "name": "tile_000438_r0010_c0028",
+  "crop_origin": [
+    896,
+    320
+  ],
+  "source_shape": [
+    955,
+    1300
+  ],
+  "tile_shape": [
+    32,
+    32
+  ],
+  "source_p_map": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/data/maps/0002_P.npy",
+  "source_t_map": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/data/maps/0002_T.npy",
+  "source_image": "/media/ransara/4aaec391-7176-4528-a2a0-49ce48f05906/RansaraData/kaust/iim-dense2sparse-fpga/data/samples/0002.jpg",
+  "boundary_policy": "independent tiles; no component stitching"
+}

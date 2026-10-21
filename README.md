@@ -199,7 +199,8 @@ measurements.
 ### USB-Blaster-only JTAG UART bring-up
 
 Use `quartus/de2_115_jtag.qpf` to validate maps through the USB-Blaster cable
-without RS-232 hardware. Generate Intel's JTAG UART IP first, compile and
+without RS-232 hardware. The JTAG board build uses 32x32 maximum frames and
+64 labels for initial bring-up; crop maps before sending them. Generate Intel's JTAG UART IP first, compile and
 program the new project, then run `scripts/uart_host.py --transport jtag` with
 the Quartus JTAG Atlantic library. Full commands and a deterministic two-component
 board test are in [USB_BLASTER.md](docs/USB_BLASTER.md).
